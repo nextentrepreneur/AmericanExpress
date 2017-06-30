@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <title>American Express</title>
+</head>
+<body>
+<h1 class="text-center"> American Express </h1>
+<h3 class="text-center">Credit Card Statement</h3>
+	<div class="col-lg-12">
+      <style>
+        .form-signin {
+          max-width: 550px;
+          padding: 15px;
+          margin: 0 auto;
+        }
+        h1 {
+            color:darkorchid;
+        }
+        h3 {
+            color:darkorchid;
+        }
+        h4{
+            color: indigo;
+        }
+          th {
+              color:Blue;
+          }
+      </style>
+	  
+	  <div class="container text-center">
+          <form class="form-signin" id="login_form" method="post" action="">
+            {% csrf_token %}
+
+            <br>
+            <input type="text" name="ID" class="form-control" placeholder="American Express Card Holder, e.g: 543211" value="" required autofocus>
+            <br>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
+          </form>
+      </div>
+	  
+        <h4>User Deatils:</h4>
+      <div class="table-responsive">
+          <table class="table table-bordered table-hover table-striped tablesorter">
+              <thead>
+              <tr>
+                <th class="header"> ID <i class="icon-sort"></i></th>
+                <th class="header"> Name <i class="icon-sort"></i></th>
+                <th class="header"> LIMIT_BAL <i class="icon-sort"></i></th>
+                <th class="header"> SEX <i class="icon-sort"></i></th>
+                <th class="header"> EDUCATION <i class="icon-sort"></i></th>
+                <th class="header"> MARRIAGE <i class="icon-sort"></i></th>
+                <th class="header"> AGE <i class="icon-sort"></i></th>
+              </tr>
+          </thead>
+          <tbody>
+
+
+              <tr>
+                  <td>{{ user.ID }}</td>
+                  <td>{{ user.Name }}</td>
+                  <td>${{ user.LIMIT_BAL }}</td>
+                  {% if user.SEX == 1 %}
+                  <td>M</td>
+                  {% elif user.SEX == 2 %}
+                      <td>F</td>
+					{% else %}
+					<td></td>
+                  {% endif %}
+
+                  {% if user.EDUCATION == 1 %}
+                    <td>Graduate School</td>
+                  {% elif user.EDUCATION == 2 %}
+                    <td>University</td>
+                  {% elif user.EDUCATION == 3 %}
+                    <td>High School</td>
+                  {% elif user.EDUCATION == 4 %}
+                     <td>Others</td>
+                  {% else %}
+                    <td></td>
+                  {% endif %}
+
+                  {% if user.MARRIAGE == 1 %}
+                    <td>Married</td>
+                  {% elif user.MARRIAGE == 2 %}
+                      <td>Single</td>
+                  {% else %}
+                      <td></td>
+                  {% endif %}
+
+                  <td>{{ user.AGE }}</td>
+              </tr>
+
+
+          </tbody>
+          </table>
+      </div>
+        <h4>Repayment Status:2005</h4>
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover table-striped tablesorter">
+              <thead>
+              <tr>
+                <th class="header"> SEPTEMBER <i class="icon-sort"></i></th>
+                <th class="header"> AUGUST <i class="icon-sort"></i></th>
+                <th class="header"> JULY <i class="icon-sort"></i></th>
+                <th class="header"> JUNE <i class="icon-sort"></i></th>
+                <th class="header"> MAY <i class="icon-sort"></i></th>
+                <th class="header"> April <i class="icon-sort"></i></th>
+              </tr>
+          </thead>
+          <tbody>
+
+
+              <tr>
+                  {% if user.PAY_0 == 0 or user.PAY_0 == 1 %}
+                    <td>Payement delay for {{ user.PAY_0 }} month</td>
+                  {% elif user.PAY_0 > 1 %}
+                      <td>Payement delay for {{ user.PAY_0 }} months</td>
+                  {% elif user.PAY_0 < 0 and user.PAY_0 > -12 %}
+                      <td>Pay duly </td>
+					  {% else %}
+					  <td></td>
+                  {% endif %}
+
+                  {% if user.PAY_2 == 0 or user.PAY_2 == 1 %}
+                  <td>Payment delay for {{ user.PAY_2 }} month</td>
+                  {% elif user.PAY_2 > 1 %}
+                      <td>Payement delay for {{ user.PAY_2 }} months</td>
+                  {% elif user.PAY_2 < 0 and user.PAY_2 >= -12 %}
+                      <td>Pay duly</td>
+					{% else %}
+					<td></td>
+                  {% endif %}
+
+                  {% if user.PAY_3 == 0 or user.PAY_3 == 1 %}
+                    <td>Payment delay for {{ user.PAY_3 }} month</td>
+                  {% elif user.PAY_3 > 1 %}
+                      <td>Payement delay for {{ user.PAY_3 }} months</td>
+                  {% elif user.PAY_3 < 0 and user.PAY_3 >= -12 %}
+                      <td>Pay duly</td>
+					{% else %}
+					<td></td>
+                  {% endif %}
+
+                {% if user.PAY_4 == 0  or user.PAY_4 == 1 %}
+                    <td>Payment delay for {{ user.PAY_4 }} month</td>
+                {% elif user.PAY_4 > 1 %}
+                      <td>Payement delay for {{ user.PAY_4 }} months</td>
+                  {% elif user.PAY_4 < 0 and user.PAY_4 >= -12 %}
+                      <td>Pay duly</td>
+					{% else %}
+					<td></td>
+                {% endif %}
+
+                {% if user.PAY_5 == 0 or user.PAY_5 == 1 %}
+                    <td>Payment delay for {{ user.PAY_5 }} month</td>
+                {% elif user.PAY_5 > 1 %}
+                      <td>Payement delay for {{ user.PAY_5 }} months</td>
+                  {% elif user.PAY_5 < 0 and user.PAY_5 >= -12 %}
+                      <td>Pay duly</td>
+					{% else %}
+					<td></td>
+                {% endif %}
+
+                {% if user.PAY_6 == 0 or user.PAY_6 == 1 %}
+                    <td>Payment delay for {{ user.PAY_6 }} month</td>
+                {% elif user.PAY_6 > 1 %}
+                      <td>Payement delay for {{ user.PAY_6 }} months</td>
+                  {% elif user.PAY_6 < 0 and user.PPAY_6 >= -12 %}
+                      <td>Pay duly</td>
+					{% else %}
+					<td></td>
+                {% endif %}
+
+              </tr>
+
+
+          </tbody>
+          </table>
+      </div>
+        <h4>Amount of Bill Statement:2005</h4>
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover table-striped tablesorter">
+              <thead>
+              <th class="header"> SEPTEMBER <i class="icon-sort"></i></th>
+                <th class="header"> AUGUST <i class="icon-sort"></i></th>
+                <th class="header"> JULY <i class="icon-sort"></i></th>
+                <th class="header"> JUNE <i class="icon-sort"></i></th>
+                <th class="header"> MAY <i class="icon-sort"></i></th>
+                <th class="header"> April <i class="icon-sort"></i></th>
+          </thead>
+          <tbody>
+
+
+              <tr>
+                  <td>${{ user.BILL_AMT1 }}</td>
+                  <td>${{ user.BILL_AMT2 }}</td>
+                  <td>${{ user.BILL_AMT3 }}</td>
+                  <td>${{ user.BILL_AMT4 }}</td>
+                  <td>${{ user.BILL_AMT5 }}</td>
+                  <td>${{ user.BILL_AMT6 }}</td>
+              </tr>
+
+
+          </tbody>
+          </table>
+      </div>
+        <h4>Amount of Previous Payment:2005</h4>
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover table-striped tablesorter">
+              <thead>
+              <tr>
+                <th class="header"> SEPTEMBER <i class="icon-sort"></i></th>
+                <th class="header"> AUGUST <i class="icon-sort"></i></th>
+                <th class="header"> JULY <i class="icon-sort"></i></th>
+                <th class="header"> JUNE <i class="icon-sort"></i></th>
+                <th class="header"> MAY <i class="icon-sort"></i></th>
+                <th class="header"> APRIL <i class="icon-sort"></i></th>
+                  <th class="header"> default_payment_next_month<i class="icon-sort"></i></th>
+              </tr>
+          </thead>
+          <tbody>
+
+
+              <tr>
+                  <td>${{ user.PAY_AMT1 }}</td>
+                  <td>${{ user.PAY_AMT2 }}</td>
+                  <td>${{ user.PAY_AMT3 }}</td>
+                  <td>${{ user.PAY_AMT4 }}</td>
+                  <td>${{ user.PAY_AMT5 }}</td>
+                  <td>${{ user.PAY_AMT6 }}</td>
+                  {% if user.default_payment_next_month == 1 %}
+                    <td>Yes</td>
+                  {% elif user.default_payment_next_month == 0 %}
+                    <td>No</td>
+					{% else %}
+					<td></td>
+					{% endif %}
+              </tr>
+
+
+          </tbody>
+          </table>
+      </div>
+
+    </div>
+</body>
+</html>
