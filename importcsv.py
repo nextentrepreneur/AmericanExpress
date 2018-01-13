@@ -1,5 +1,5 @@
 #This module can be used to upload csv file data to the sqlite database directly.
-#To import the cse file data just execute this module: "python importcsv.py" 
+#To import the csv file data just execute this module: "python importcsv.py" 
 
 import csv,sys,os
 
